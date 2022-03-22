@@ -1,6 +1,5 @@
-import { SpatialGrid2 }  from '@thi.ng/geom-accel'
-import { ReadonlyVec } from '@thi.ng/vectors'
-import { MersenneTwister}from './mersenne-twister'
+import { SpatialGrid2 }  from '@thi.ng/geom-accel';
+import { MersenneTwister}from './mersenne-twister';
  
 export class Coord{
     constructor(x,y,Origin){
@@ -181,7 +180,7 @@ export class CoordSystem{
                     flag=false;
                     pts=Vec();
                     if(chcoord.x+(x2-x1)!==0 && chcoord.y+(y2-y1)!==0){
-                        pts=ReadonlyVec([[chcoord.x+radius,chcoord.y+radius],[chcoord.x-radius,chcoord.y+radius],[chcoord.x-radius,chcoord.y-radius],[chcoord.x+radius,chcoord.y-radius]]);
+                        pts=[[chcoord.x+radius,chcoord.y+radius],[chcoord.x-radius,chcoord.y+radius],[chcoord.x-radius,chcoord.y-radius],[chcoord.x+radius,chcoord.y-radius]];
                         const searchRet=this.index.queryKeys(pts,2*radius).length;
                         if(searchRet==0){
                             a=Vec2()

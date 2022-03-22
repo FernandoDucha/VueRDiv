@@ -5,9 +5,11 @@
         :key=index
 >
 </coordcomp>
-</canvascomp><br>
-<button class=button-30 v-for="(item, index) in buttons" :key="index" @click="dealWithClick(bsreturnvalue[index])">{{item}}</button>
-<input type="number" @keydown="keyPressTreat(event)"/>
+</canvascomp>
+<ul>
+<li><button class=button-30 v-for="(item, index) in buttons" :key="index" @click="dealWithClick(bsreturnvalue[index])">{{item}}</button></li>
+</ul>
+<a> Directions: </a><input type="number" @keydown="keyPressTreat($event)" @keydown.enter="submit('directions')" id="directions"/><a> Point Neighbor Radius: </a><input type="number" @keydown="keyPressTreat($event)" @keydown.enter="submit('radius')" id="radius"/> <a> Seed: </a><input type="number" @keydown="keyPressTreat($event)" @keydown.enter="submit('seed')" id="seed"/>
 
 </template>
 
@@ -25,7 +27,8 @@ export default {
         type: Array
       },
       coordcreator:{
-        type: CoordSystem
+        type: CoordSystem,
+        default: null
       },
       radius:{
         type : Number,
@@ -34,7 +37,15 @@ export default {
       directions:{
         type : Number,
         default: 0
-      }
+      },
+      radius:{
+        type: Number,
+        default: 0
+      },
+      seed:{
+        type: Number,
+        default: 0
+      },
     }
   },
   computed:{
@@ -51,17 +62,33 @@ export default {
   },
   methods:{
     dealWithClick(coordQty){
+      if(this.coordcreator==null){
+        this.coordcreator=CoordSystem([0,0],)
+      }
       switch(coordQty){
         case 0:
-          this.coords.concat(this.coordcreator.addToPath(1,))
+          this.coords.concat(this.coordcreator.addToPath(1,this.directions))
       }
     },
     keyPressTreat(event){
-      if(event.key>= 48 && event.charCode <= 57 && event.charCode === 110){
-        console.log(event.charCode);
-        return event.charCode;
+      if(event.keyCode>= 48 && event.keyCode <= 57){
+        return event.keyCode;
       }else{
         return null;
+      }
+    },
+    submit(object){
+      var value = document.getElementById(object).value;
+      if(Math.isInteger(value) && object=="direction"){
+        this.directions=value;
+      
+      }
+      if(object=="radius"){
+        this.radius=value;
+      }
+      if(Math.isInteger(value) && object=="seed"){
+        this.seed=value;
+      
       }
     }
   }
@@ -69,7 +96,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
+<style scoped>
 
 /* CSS */
 .button-30 {
@@ -91,7 +118,7 @@ export default {
   overflow: hidden;
   padding-left: 16px;
   padding-right: 16px;
-  position: relative;
+  /* position: relative; */
   text-align: left;
   text-decoration: none;
   transition: box-shadow .15s,transform .15s;
@@ -101,8 +128,19 @@ export default {
   white-space: nowrap;
   will-change: box-shadow,transform;
   font-size: 18px;
-}
+  list-style-type: none;
+  list-style: none;
 
+}
+ul {
+    display: block;
+    list-style-type: none;
+    margin-block-start: 0px;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
 .button-30:focus {
   box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
 }
