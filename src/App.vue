@@ -1,16 +1,23 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
+  <DrawingCanvas :buttons="allbs"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import DrawingCanvas from './components/DrawingCanvas'
 export default {
+  data: function() {
+    return {
+        allbs:[
+          '1-point' ,'10-points','100-points','1000-points'
+        ],
+    }
+  },
   name: 'App',
   components: {
-    HelloWorld
-  }
+    DrawingCanvas
+  },
+  
 }
 </script>
 
